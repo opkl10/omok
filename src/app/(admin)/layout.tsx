@@ -15,6 +15,11 @@ export default async function AdminLayout({
     redirect('/login');
   }
 
+  // Only admins can access the admin panel
+  if (session.user.role !== 'admin') {
+    redirect('/');
+  }
+
   return (
     <Providers>
       <div className="flex min-h-screen" dir="rtl">
