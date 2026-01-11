@@ -39,7 +39,7 @@ export async function PUT(
   const { id } = await params;
 
   try {
-    const { title, content, excerpt, featuredImage, status, categoryId } = await request.json();
+    const { title, content, excerpt, featuredImage, status, categoryId, theme, themeType } = await request.json();
 
     const existingPost = await prisma.post.findUnique({ where: { id } });
     if (!existingPost) {
@@ -68,6 +68,8 @@ export async function PUT(
         status,
         publishedAt: status === 'published' && !existingPost.publishedAt ? new Date() : existingPost.publishedAt,
         categoryId: categoryId || null,
+        theme: theme || null,
+        themeType: themeType || 'color',
       },
       include: {
         author: { select: { id: true, name: true } },

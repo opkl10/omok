@@ -11,6 +11,14 @@ interface Settings {
   maintenanceMode: string;
   googleAnalyticsId: string;
   footerText: string;
+  primaryColor: string;
+  secondaryColor: string;
+  notFoundTitle: string;
+  notFoundMessage: string;
+  buttonText_save: string;
+  buttonText_cancel: string;
+  buttonText_edit: string;
+  buttonText_delete: string;
 }
 
 const defaultSettings: Settings = {
@@ -22,6 +30,14 @@ const defaultSettings: Settings = {
   maintenanceMode: 'false',
   googleAnalyticsId: '',
   footerText: '',
+  primaryColor: '#3B82F6',
+  secondaryColor: '#10B981',
+  notFoundTitle: 'עמוד לא נמצא',
+  notFoundMessage: 'מצטערים, העמוד שחיפשת לא נמצא.',
+  buttonText_save: 'שמור',
+  buttonText_cancel: 'ביטול',
+  buttonText_edit: 'ערוך',
+  buttonText_delete: 'מחק',
 };
 
 export default function SettingsPage() {
@@ -193,6 +209,115 @@ export default function SettingsPage() {
                 value={settings.footerText}
                 onChange={(e) => handleChange('footerText', e.target.value)}
                 rows={2}
+                className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+              />
+            </div>
+          </div>
+        </div>
+
+        <div className="bg-white rounded-lg shadow p-6">
+          <h2 className="text-lg font-medium mb-4">ערכת נושא</h2>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <div>
+              <label className="block text-sm font-medium text-gray-700 mb-1">צבע ראשי</label>
+              <div className="flex gap-2">
+                <input
+                  type="color"
+                  value={settings.primaryColor}
+                  onChange={(e) => handleChange('primaryColor', e.target.value)}
+                  className="h-10 w-20 border border-gray-300 rounded-md"
+                />
+                <input
+                  type="text"
+                  value={settings.primaryColor}
+                  onChange={(e) => handleChange('primaryColor', e.target.value)}
+                  className="flex-1 px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                  dir="ltr"
+                />
+              </div>
+            </div>
+
+            <div>
+              <label className="block text-sm font-medium text-gray-700 mb-1">צבע משני</label>
+              <div className="flex gap-2">
+                <input
+                  type="color"
+                  value={settings.secondaryColor}
+                  onChange={(e) => handleChange('secondaryColor', e.target.value)}
+                  className="h-10 w-20 border border-gray-300 rounded-md"
+                />
+                <input
+                  type="text"
+                  value={settings.secondaryColor}
+                  onChange={(e) => handleChange('secondaryColor', e.target.value)}
+                  className="flex-1 px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                  dir="ltr"
+                />
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div className="bg-white rounded-lg shadow p-6">
+          <h2 className="text-lg font-medium mb-4">עמוד 404</h2>
+          <div className="space-y-4">
+            <div>
+              <label className="block text-sm font-medium text-gray-700 mb-1">כותרת</label>
+              <input
+                type="text"
+                value={settings.notFoundTitle}
+                onChange={(e) => handleChange('notFoundTitle', e.target.value)}
+                className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+              />
+            </div>
+            <div>
+              <label className="block text-sm font-medium text-gray-700 mb-1">הודעה</label>
+              <textarea
+                value={settings.notFoundMessage}
+                onChange={(e) => handleChange('notFoundMessage', e.target.value)}
+                rows={3}
+                className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+              />
+            </div>
+          </div>
+        </div>
+
+        <div className="bg-white rounded-lg shadow p-6">
+          <h2 className="text-lg font-medium mb-4">טקסטים בממשק</h2>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <div>
+              <label className="block text-sm font-medium text-gray-700 mb-1">כפתור שמור</label>
+              <input
+                type="text"
+                value={settings.buttonText_save}
+                onChange={(e) => handleChange('buttonText_save', e.target.value)}
+                className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+              />
+            </div>
+            <div>
+              <label className="block text-sm font-medium text-gray-700 mb-1">כפתור ביטול</label>
+              <input
+                type="text"
+                value={settings.buttonText_cancel}
+                onChange={(e) => handleChange('buttonText_cancel', e.target.value)}
+                className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+              />
+            </div>
+            <div>
+              <label className="block text-sm font-medium text-gray-700 mb-1">כפתור ערוך</label>
+              <input
+                type="text"
+                value={settings.buttonText_edit}
+                onChange={(e) => handleChange('buttonText_edit', e.target.value)}
+                className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+              />
+            </div>
+            <div>
+              <label className="block text-sm font-medium text-gray-700 mb-1">כפתור מחק</label>
+              <input
+                type="text"
+                value={settings.buttonText_delete}
+                onChange={(e) => handleChange('buttonText_delete', e.target.value)}
                 className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
               />
             </div>

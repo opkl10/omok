@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import dynamic from 'next/dynamic';
 
@@ -20,6 +20,8 @@ interface Post {
   featuredImage: string;
   status: string;
   categoryId: string;
+  theme: string;
+  themeType: string;
 }
 
 export default function PostEditor({ post, categories }: { post?: Post; categories: Category[] }) {
@@ -30,6 +32,8 @@ export default function PostEditor({ post, categories }: { post?: Post; categori
   const [featuredImage, setFeaturedImage] = useState(post?.featuredImage || '');
   const [status, setStatus] = useState(post?.status || 'draft');
   const [categoryId, setCategoryId] = useState(post?.categoryId || '');
+  const [theme, setTheme] = useState(post?.theme || '');
+  const [themeType, setThemeType] = useState(post?.themeType || 'color');
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
 
@@ -52,6 +56,8 @@ export default function PostEditor({ post, categories }: { post?: Post; categori
           featuredImage,
           status,
           categoryId: categoryId || null,
+          theme: theme || null,
+          themeType,
         }),
       });
 
@@ -182,6 +188,48 @@ export default function PostEditor({ post, categories }: { post?: Post; categori
                 className="mt-2 w-full h-32 object-cover rounded"
               />
             )}
+          </div>
+
+          <div className="bg-white p-4 rounded-lg shadow">
+            <h3 className="font-medium mb-4">ערכת נושא</h3>
+            <div className="space-y-4">
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-1">סוג ערכה</label>
+                <select
+                  value={themeType}
+                  onChange={(e) => setThemeType(e.target.value)}
+                  className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                >
+                  <option value="color">צבע</option>
+                  <option value="image">תמונה</option>
+                </select>
+              </div>
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-1">
+                  {themeType === 'color' ? 'צבע נושא' : 'URL תמונת נושא'}
+                </label>
+                <input
+                  type={themeType === 'color' ? 'color' : 'text'}
+                  value={theme}
+                  onChange={(e) => setTheme(e.target.value)}
+                  placeholder={themeType === 'color' ? '#000000' : 'כתובת URL של תמונת הנושא'}
+                  className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                />
+                {theme && themeType === 'image' && (
+                  <img
+                    src={theme}
+                    alt="Theme"
+                    className="mt-2 w-full h-20 object-cover rounded"
+                  />
+                )}
+                {theme && themeType === 'color' && (
+                  <div
+                    className="mt-2 w-full h-10 rounded border border-gray-300"
+                    style={{ backgroundColor: theme }}
+                  />
+                )}
+              </div>
+            </div>
           </div>
         </div>
       </div>

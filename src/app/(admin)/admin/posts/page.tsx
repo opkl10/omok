@@ -68,6 +68,15 @@ export default async function PostsPage() {
                   </td>
                   <td className="px-6 py-4">
                     <div className="flex gap-2">
+                      {post.status === 'published' && (
+                        <Link
+                          href={`/post/${post.uniqueIdentifier}`}
+                          className="text-green-600 hover:underline text-sm"
+                          target="_blank"
+                        >
+                          צפה
+                        </Link>
+                      )}
                       <Link
                         href={`/admin/posts/${post.id}`}
                         className="text-blue-600 hover:underline text-sm"
