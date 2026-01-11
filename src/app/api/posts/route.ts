@@ -45,7 +45,7 @@ export async function POST(request: NextRequest) {
   }
 
   try {
-    const { title, content, excerpt, featuredImage, status, categoryId } = await request.json();
+    const { title, content, excerpt, featuredImage, headerColor, status, categoryId } = await request.json();
 
     if (!title || !content) {
       return NextResponse.json(
@@ -69,6 +69,7 @@ export async function POST(request: NextRequest) {
         content,
         excerpt,
         featuredImage,
+        headerColor,
         status: status || 'draft',
         publishedAt: status === 'published' ? new Date() : null,
         authorId: session.user.id,
