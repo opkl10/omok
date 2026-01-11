@@ -45,6 +45,8 @@ next-env.d.ts
 /src/generated/prisma
 /prisma/dev.db
 /prisma/dev.db-journal
+*.db
+*.db-journal
 
 # uploads (optional - uncomment if you don't want to track uploads)
 # /public/uploads/*
