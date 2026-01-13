@@ -21,7 +21,7 @@ export default async function StaticPage({ params }: { params: Promise<{ slug: s
   const isFullWidth = page.template === 'full-width';
 
   return (
-    <article className="py-12">
+    <article className="py-12 bg-white min-h-screen">
       <div className={`mx-auto px-4 ${isFullWidth ? 'max-w-full' : 'max-w-4xl'}`}>
         <header className="mb-8 text-center">
           <h1 className="text-4xl font-bold">{page.title}</h1>

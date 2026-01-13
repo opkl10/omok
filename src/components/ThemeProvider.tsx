@@ -69,15 +69,7 @@ export default function ThemeProvider({ children }: { children: ReactNode }) {
 
   return (
     <ThemeContext.Provider value={theme}>
-      <div
-        style={{
-          backgroundColor: theme.backgroundColor,
-          color: theme.textColor,
-          minHeight: '100vh'
-        }}
-      >
-        {children}
-      </div>
+      {children}
     </ThemeContext.Provider>
   );
 }

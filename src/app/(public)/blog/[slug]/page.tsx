@@ -37,7 +37,7 @@ export default async function PostPage({ params }: { params: Promise<{ slug: str
   const relatedPosts = await getRelatedPosts(post.categoryId, post.id);
 
   return (
-    <article className="py-12">
+    <article className="py-12 bg-white min-h-screen">
       <div className="max-w-4xl mx-auto px-4">
         {/* Header */}
         <header className="mb-8">

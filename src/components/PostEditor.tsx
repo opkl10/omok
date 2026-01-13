@@ -129,7 +129,7 @@ export default function PostEditor({ post, categories }: { post?: Post; categori
 
         <div className="space-y-6">
           <div className="bg-white p-4 rounded-lg shadow">
-            <h3 className="font-medium mb-4">פרסום</h3>
+            <h3 className="font-medium mb-4 text-black">פרסום</h3>
             <div className="space-y-4">
               <div>
                 <label className="block text-sm font-medium text-black mb-1">סטטוס</label>
@@ -154,7 +154,7 @@ export default function PostEditor({ post, categories }: { post?: Post; categori
           </div>
 
           <div className="bg-white p-4 rounded-lg shadow">
-            <h3 className="font-medium mb-4">קטגוריה</h3>
+            <h3 className="font-medium mb-4 text-black">קטגוריה</h3>
             <select
               value={categoryId}
               onChange={(e) => setCategoryId(e.target.value)}
@@ -170,7 +170,7 @@ export default function PostEditor({ post, categories }: { post?: Post; categori
           </div>
 
           <div className="bg-white p-4 rounded-lg shadow">
-            <h3 className="font-medium mb-4">תמונה ראשית</h3>
+            <h3 className="font-medium mb-4 text-black">תמונה ראשית</h3>
             <input
               type="text"
               value={featuredImage}
@@ -188,7 +188,7 @@ export default function PostEditor({ post, categories }: { post?: Post; categori
           </div>
 
           <div className="bg-white p-4 rounded-lg shadow">
-            <h3 className="font-medium mb-4">צבע נושא</h3>
+            <h3 className="font-medium mb-4 text-black">צבע נושא</h3>
             <div className="flex items-center gap-3">
               <input
                 type="color"
