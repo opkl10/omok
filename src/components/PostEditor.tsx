@@ -18,6 +18,7 @@ interface Post {
   content: string;
   excerpt: string;
   featuredImage: string;
+  featuredColor: string;
   status: string;
   categoryId: string;
 }
@@ -28,6 +29,7 @@ export default function PostEditor({ post, categories }: { post?: Post; categori
   const [content, setContent] = useState(post?.content || '');
   const [excerpt, setExcerpt] = useState(post?.excerpt || '');
   const [featuredImage, setFeaturedImage] = useState(post?.featuredImage || '');
+  const [featuredColor, setFeaturedColor] = useState(post?.featuredColor || '');
   const [status, setStatus] = useState(post?.status || 'draft');
   const [categoryId, setCategoryId] = useState(post?.categoryId || '');
   const [loading, setLoading] = useState(false);
@@ -50,6 +52,7 @@ export default function PostEditor({ post, categories }: { post?: Post; categori
           content,
           excerpt,
           featuredImage,
+          featuredColor,
           status,
           categoryId: categoryId || null,
         }),
@@ -180,6 +183,31 @@ export default function PostEditor({ post, categories }: { post?: Post; categori
                 src={featuredImage}
                 alt="Featured"
                 className="mt-2 w-full h-32 object-cover rounded"
+              />
+            )}
+          </div>
+
+          <div className="bg-white p-4 rounded-lg shadow">
+            <h3 className="font-medium mb-4">צבע נושא</h3>
+            <div className="flex items-center gap-3">
+              <input
+                type="color"
+                value={featuredColor || '#3b82f6'}
+                onChange={(e) => setFeaturedColor(e.target.value)}
+                className="w-12 h-10 border border-gray-300 rounded cursor-pointer"
+              />
+              <input
+                type="text"
+                value={featuredColor}
+                onChange={(e) => setFeaturedColor(e.target.value)}
+                placeholder="#3b82f6"
+                className="flex-1 px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+              />
+            </div>
+            {featuredColor && (
+              <div
+                className="mt-2 w-full h-8 rounded"
+                style={{ backgroundColor: featuredColor }}
               />
             )}
           </div>
