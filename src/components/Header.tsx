@@ -11,6 +11,9 @@ interface PageLink {
 
 interface Settings {
   siteName?: string;
+  logoType?: string;
+  logoText?: string;
+  logoImage?: string;
 }
 
 export default function Header() {
@@ -36,8 +39,19 @@ export default function Header() {
     <header className="bg-white shadow-sm">
       <div className="max-w-6xl mx-auto px-4 py-4">
         <div className="flex items-center justify-between">
-          <Link href="/" className="text-xl font-bold text-black">
-            {settings.siteName || 'הבלוג שלי'}
+          <Link href="/" className="flex items-center gap-2">
+            {(settings.logoType === 'image' || settings.logoType === 'both') && settings.logoImage && (
+              <img
+                src={settings.logoImage}
+                alt={settings.siteName || 'Logo'}
+                className="h-10 w-auto object-contain"
+              />
+            )}
+            {(settings.logoType === 'text' || settings.logoType === 'both' || !settings.logoType) && (
+              <span className="text-xl font-bold text-black">
+                {settings.logoText || settings.siteName || 'הבלוג שלי'}
+              </span>
+            )}
           </Link>
 
           <nav className="flex items-center gap-6">
@@ -46,6 +60,9 @@ export default function Header() {
             </Link>
             <Link href="/blog" className="text-black hover:text-blue-600">
               בלוג
+            </Link>
+            <Link href="/contact" className="text-black hover:text-blue-600">
+              צור קשר
             </Link>
             {pages.map((page) => (
               <Link

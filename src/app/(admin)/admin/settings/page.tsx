@@ -11,6 +11,9 @@ interface Settings {
   maintenanceMode: string;
   googleAnalyticsId: string;
   footerText: string;
+  logoType: string;
+  logoText: string;
+  logoImage: string;
 }
 
 const defaultSettings: Settings = {
@@ -22,6 +25,9 @@ const defaultSettings: Settings = {
   maintenanceMode: 'false',
   googleAnalyticsId: '',
   footerText: '',
+  logoType: 'text',
+  logoText: '',
+  logoImage: '',
 };
 
 export default function SettingsPage() {
@@ -127,6 +133,75 @@ export default function SettingsPage() {
                 rows={3}
                 className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
               />
+            </div>
+          </div>
+        </div>
+
+        <div className="bg-white rounded-lg shadow p-6">
+          <h2 className="text-lg font-medium mb-4">לוגו האתר</h2>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <div>
+              <label className="block text-sm font-medium text-black mb-1">סוג לוגו</label>
+              <select
+                value={settings.logoType}
+                onChange={(e) => handleChange('logoType', e.target.value)}
+                className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+              >
+                <option value="text">טקסט</option>
+                <option value="image">תמונה</option>
+                <option value="both">טקסט + תמונה</option>
+              </select>
+            </div>
+
+            {(settings.logoType === 'text' || settings.logoType === 'both') && (
+              <div>
+                <label className="block text-sm font-medium text-black mb-1">טקסט לוגו</label>
+                <input
+                  type="text"
+                  value={settings.logoText}
+                  onChange={(e) => handleChange('logoText', e.target.value)}
+                  placeholder={settings.siteName || 'שם האתר'}
+                  className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                />
+              </div>
+            )}
+
+            {(settings.logoType === 'image' || settings.logoType === 'both') && (
+              <div className={settings.logoType === 'both' ? 'md:col-span-2' : ''}>
+                <label className="block text-sm font-medium text-black mb-1">כתובת תמונת לוגו</label>
+                <input
+                  type="text"
+                  value={settings.logoImage}
+                  onChange={(e) => handleChange('logoImage', e.target.value)}
+                  placeholder="https://example.com/logo.png או /uploads/logo.png"
+                  className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                  dir="ltr"
+                />
+                <p className="text-sm text-black mt-1">
+                  העלה תמונה דרך ספריית המדיה והעתק את הכתובת לכאן
+                </p>
+              </div>
+            )}
+
+            <div className="md:col-span-2">
+              <label className="block text-sm font-medium text-black mb-2">תצוגה מקדימה</label>
+              <div className="bg-gray-800 p-4 rounded-lg flex items-center gap-3">
+                {(settings.logoType === 'image' || settings.logoType === 'both') && settings.logoImage && (
+                  <img
+                    src={settings.logoImage}
+                    alt="Logo"
+                    className="h-10 w-auto object-contain"
+                  />
+                )}
+                {(settings.logoType === 'text' || settings.logoType === 'both') && (
+                  <span className="text-white text-xl font-bold">
+                    {settings.logoText || settings.siteName || 'שם האתר'}
+                  </span>
+                )}
+                {!settings.logoImage && settings.logoType === 'image' && (
+                  <span className="text-gray-400">לא נבחרה תמונה</span>
+                )}
+              </div>
             </div>
           </div>
         </div>
