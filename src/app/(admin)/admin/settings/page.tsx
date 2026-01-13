@@ -99,7 +99,7 @@ export default function SettingsPage() {
           <h2 className="text-lg font-medium mb-4">הגדרות כלליות</h2>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-1">שם האתר</label>
+              <label className="block text-sm font-medium text-black mb-1">שם האתר</label>
               <input
                 type="text"
                 value={settings.siteName}
@@ -109,7 +109,7 @@ export default function SettingsPage() {
             </div>
 
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-1">כתובת האתר</label>
+              <label className="block text-sm font-medium text-black mb-1">כתובת האתר</label>
               <input
                 type="url"
                 value={settings.siteUrl}
@@ -120,7 +120,7 @@ export default function SettingsPage() {
             </div>
 
             <div className="md:col-span-2">
-              <label className="block text-sm font-medium text-gray-700 mb-1">תיאור האתר</label>
+              <label className="block text-sm font-medium text-black mb-1">תיאור האתר</label>
               <textarea
                 value={settings.siteDescription}
                 onChange={(e) => handleChange('siteDescription', e.target.value)}
@@ -135,7 +135,7 @@ export default function SettingsPage() {
           <h2 className="text-lg font-medium mb-4">הגדרות תוכן</h2>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-1">פוסטים לעמוד</label>
+              <label className="block text-sm font-medium text-black mb-1">פוסטים לעמוד</label>
               <input
                 type="number"
                 value={settings.postsPerPage}
@@ -147,7 +147,7 @@ export default function SettingsPage() {
             </div>
 
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-1">אפשר תגובות</label>
+              <label className="block text-sm font-medium text-black mb-1">אפשר תגובות</label>
               <select
                 value={settings.allowComments}
                 onChange={(e) => handleChange('allowComments', e.target.value)}
@@ -164,7 +164,7 @@ export default function SettingsPage() {
           <h2 className="text-lg font-medium mb-4">הגדרות מתקדמות</h2>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-1">מזהה Google Analytics</label>
+              <label className="block text-sm font-medium text-black mb-1">מזהה Google Analytics</label>
               <input
                 type="text"
                 value={settings.googleAnalyticsId}
@@ -176,7 +176,7 @@ export default function SettingsPage() {
             </div>
 
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-1">מצב תחזוקה</label>
+              <label className="block text-sm font-medium text-black mb-1">מצב תחזוקה</label>
               <select
                 value={settings.maintenanceMode}
                 onChange={(e) => handleChange('maintenanceMode', e.target.value)}
@@ -188,7 +188,7 @@ export default function SettingsPage() {
             </div>
 
             <div className="md:col-span-2">
-              <label className="block text-sm font-medium text-gray-700 mb-1">טקסט פוטר</label>
+              <label className="block text-sm font-medium text-black mb-1">טקסט פוטר</label>
               <textarea
                 value={settings.footerText}
                 onChange={(e) => handleChange('footerText', e.target.value)}

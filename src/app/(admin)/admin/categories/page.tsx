@@ -100,16 +100,16 @@ export default function CategoriesPage() {
             <table className="w-full">
               <thead className="bg-gray-50">
                 <tr>
-                  <th className="px-6 py-3 text-right text-sm font-medium text-gray-500">שם</th>
-                  <th className="px-6 py-3 text-right text-sm font-medium text-gray-500">תיאור</th>
-                  <th className="px-6 py-3 text-right text-sm font-medium text-gray-500">פוסטים</th>
-                  <th className="px-6 py-3 text-right text-sm font-medium text-gray-500">פעולות</th>
+                  <th className="px-6 py-3 text-right text-sm font-medium text-black">שם</th>
+                  <th className="px-6 py-3 text-right text-sm font-medium text-black">תיאור</th>
+                  <th className="px-6 py-3 text-right text-sm font-medium text-black">פוסטים</th>
+                  <th className="px-6 py-3 text-right text-sm font-medium text-black">פעולות</th>
                 </tr>
               </thead>
               <tbody className="divide-y divide-gray-200">
                 {categories.length === 0 ? (
                   <tr>
-                    <td colSpan={4} className="px-6 py-8 text-center text-gray-500">
+                    <td colSpan={4} className="px-6 py-8 text-center text-black">
                       אין קטגוריות עדיין
                     </td>
                   </tr>
@@ -117,8 +117,8 @@ export default function CategoriesPage() {
                   categories.map((category) => (
                     <tr key={category.id} className="hover:bg-gray-50">
                       <td className="px-6 py-4 font-medium">{category.name}</td>
-                      <td className="px-6 py-4 text-gray-500">{category.description || '-'}</td>
-                      <td className="px-6 py-4 text-gray-500">{category._count.posts}</td>
+                      <td className="px-6 py-4 text-black">{category.description || '-'}</td>
+                      <td className="px-6 py-4 text-black">{category._count.posts}</td>
                       <td className="px-6 py-4">
                         <div className="flex gap-2">
                           <button
@@ -150,7 +150,7 @@ export default function CategoriesPage() {
             </h2>
             <form onSubmit={handleSubmit} className="space-y-4">
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-1">שם</label>
+                <label className="block text-sm font-medium text-black mb-1">שם</label>
                 <input
                   type="text"
                   value={name}
@@ -161,7 +161,7 @@ export default function CategoriesPage() {
               </div>
 
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-1">תיאור</label>
+                <label className="block text-sm font-medium text-black mb-1">תיאור</label>
                 <textarea
                   value={description}
                   onChange={(e) => setDescription(e.target.value)}

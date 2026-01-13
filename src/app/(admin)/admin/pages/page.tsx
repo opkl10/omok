@@ -26,18 +26,18 @@ export default async function PagesPage() {
         <table className="w-full">
           <thead className="bg-gray-50">
             <tr>
-              <th className="px-6 py-3 text-right text-sm font-medium text-gray-500">כותרת</th>
-              <th className="px-6 py-3 text-right text-sm font-medium text-gray-500">מחבר</th>
-              <th className="px-6 py-3 text-right text-sm font-medium text-gray-500">תבנית</th>
-              <th className="px-6 py-3 text-right text-sm font-medium text-gray-500">סטטוס</th>
-              <th className="px-6 py-3 text-right text-sm font-medium text-gray-500">תאריך</th>
-              <th className="px-6 py-3 text-right text-sm font-medium text-gray-500">פעולות</th>
+              <th className="px-6 py-3 text-right text-sm font-medium text-black">כותרת</th>
+              <th className="px-6 py-3 text-right text-sm font-medium text-black">מחבר</th>
+              <th className="px-6 py-3 text-right text-sm font-medium text-black">תבנית</th>
+              <th className="px-6 py-3 text-right text-sm font-medium text-black">סטטוס</th>
+              <th className="px-6 py-3 text-right text-sm font-medium text-black">תאריך</th>
+              <th className="px-6 py-3 text-right text-sm font-medium text-black">פעולות</th>
             </tr>
           </thead>
           <tbody className="divide-y divide-gray-200">
             {pages.length === 0 ? (
               <tr>
-                <td colSpan={6} className="px-6 py-8 text-center text-gray-500">
+                <td colSpan={6} className="px-6 py-8 text-center text-black">
                   אין עמודים עדיין
                 </td>
               </tr>
@@ -49,8 +49,8 @@ export default async function PagesPage() {
                       {page.title}
                     </Link>
                   </td>
-                  <td className="px-6 py-4 text-gray-500">{page.author.name}</td>
-                  <td className="px-6 py-4 text-gray-500">{page.template}</td>
+                  <td className="px-6 py-4 text-black">{page.author.name}</td>
+                  <td className="px-6 py-4 text-black">{page.template}</td>
                   <td className="px-6 py-4">
                     <span
                       className={`px-2 py-1 text-xs rounded ${
@@ -62,7 +62,7 @@ export default async function PagesPage() {
                       {page.status === 'published' ? 'פורסם' : 'טיוטה'}
                     </span>
                   </td>
-                  <td className="px-6 py-4 text-gray-500">
+                  <td className="px-6 py-4 text-black">
                     {new Date(page.createdAt).toLocaleDateString('he-IL')}
                   </td>
                   <td className="px-6 py-4">

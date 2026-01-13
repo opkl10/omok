@@ -93,7 +93,7 @@ export default function PostEditor({ post, categories }: { post?: Post; categori
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
         <div className="lg:col-span-2 space-y-6">
           <div>
-            <label className="block text-sm font-medium text-gray-700 mb-1">כותרת</label>
+            <label className="block text-sm font-medium text-black mb-1">כותרת</label>
             <input
               type="text"
               value={title}
@@ -104,7 +104,7 @@ export default function PostEditor({ post, categories }: { post?: Post; categori
           </div>
 
           <div>
-            <label className="block text-sm font-medium text-gray-700 mb-1">תוכן</label>
+            <label className="block text-sm font-medium text-black mb-1">תוכן</label>
             <div className="bg-white">
               <ReactQuill
                 theme="snow"
@@ -117,7 +117,7 @@ export default function PostEditor({ post, categories }: { post?: Post; categori
           </div>
 
           <div className="pt-12">
-            <label className="block text-sm font-medium text-gray-700 mb-1">תקציר</label>
+            <label className="block text-sm font-medium text-black mb-1">תקציר</label>
             <textarea
               value={excerpt}
               onChange={(e) => setExcerpt(e.target.value)}
@@ -132,7 +132,7 @@ export default function PostEditor({ post, categories }: { post?: Post; categori
             <h3 className="font-medium mb-4">פרסום</h3>
             <div className="space-y-4">
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-1">סטטוס</label>
+                <label className="block text-sm font-medium text-black mb-1">סטטוס</label>
                 <select
                   value={status}
                   onChange={(e) => setStatus(e.target.value)}

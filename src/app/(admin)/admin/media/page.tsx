@@ -132,7 +132,7 @@ export default function MediaPage() {
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
         <div className="lg:col-span-2">
           {media.length === 0 ? (
-            <div className="bg-white rounded-lg shadow p-8 text-center text-gray-500">
+            <div className="bg-white rounded-lg shadow p-8 text-center text-black">
               אין קבצי מדיה עדיין. העלה קבצים להתחלה.
             </div>
           ) : (
@@ -156,7 +156,7 @@ export default function MediaPage() {
                     <div className="text-sm truncate" title={item.originalName}>
                       {item.originalName}
                     </div>
-                    <div className="text-xs text-gray-500">{formatFileSize(item.size)}</div>
+                    <div className="text-xs text-black">{formatFileSize(item.size)}</div>
                   </div>
                 </div>
               ))}
@@ -177,19 +177,19 @@ export default function MediaPage() {
               </div>
               <div className="space-y-2 text-sm">
                 <div>
-                  <span className="text-gray-500">שם: </span>
+                  <span className="text-black">שם: </span>
                   {selectedMedia.originalName}
                 </div>
                 <div>
-                  <span className="text-gray-500">גודל: </span>
+                  <span className="text-black">גודל: </span>
                   {formatFileSize(selectedMedia.size)}
                 </div>
                 <div>
-                  <span className="text-gray-500">סוג: </span>
+                  <span className="text-black">סוג: </span>
                   {selectedMedia.mimeType}
                 </div>
                 <div>
-                  <span className="text-gray-500">תאריך: </span>
+                  <span className="text-black">תאריך: </span>
                   {new Date(selectedMedia.createdAt).toLocaleDateString('he-IL')}
                 </div>
               </div>
@@ -209,7 +209,7 @@ export default function MediaPage() {
               </div>
             </div>
           ) : (
-            <div className="bg-white rounded-lg shadow p-4 text-center text-gray-500">
+            <div className="bg-white rounded-lg shadow p-4 text-center text-black">
               בחר קובץ לצפייה בפרטים
             </div>
           )}

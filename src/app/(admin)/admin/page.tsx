@@ -42,7 +42,7 @@ export default async function AdminDashboard() {
             <div className={`w-12 h-12 ${stat.color} rounded-lg flex items-center justify-center text-white text-xl mb-4`}>
               {stat.value}
             </div>
-            <div className="text-gray-600">{stat.label}</div>
+            <div className="text-black">{stat.label}</div>
           </Link>
         ))}
       </div>
@@ -53,7 +53,7 @@ export default async function AdminDashboard() {
         </div>
         <div className="divide-y divide-gray-200">
           {recentPosts.length === 0 ? (
-            <div className="px-6 py-8 text-center text-gray-500">
+            <div className="px-6 py-8 text-center text-black">
               אין פוסטים עדיין.{' '}
               <Link href="/admin/posts/new" className="text-blue-600 hover:underline">
                 צור פוסט חדש
@@ -69,7 +69,7 @@ export default async function AdminDashboard() {
                 <div className="flex justify-between items-center">
                   <div>
                     <div className="font-medium">{post.title}</div>
-                    <div className="text-sm text-gray-500">
+                    <div className="text-sm text-black">
                       {post.author.name} • {new Date(post.createdAt).toLocaleDateString('he-IL')}
                     </div>
                   </div>
