@@ -68,12 +68,12 @@ export default async function BlogPage({
                     )}
                     <div className="p-6 flex-1">
                       {post.category && (
-                        <span className="text-sm text-blue-600 font-medium">
+                        <span className="text-sm theme-primary font-medium">
                           {post.category.name}
                         </span>
                       )}
                       <h2 className="text-2xl font-bold mt-2 mb-3">
-                        <Link href={`/blog/${post.slug}`} className="hover:text-blue-600">
+                        <Link href={`/blog/${post.slug}`} className="hover:opacity-70 theme-link">
                           {post.title}
                         </Link>
                       </h2>
@@ -111,7 +111,7 @@ export default async function BlogPage({
                     href={`/blog?page=${page}`}
                     className={`px-4 py-2 border rounded-md ${
                       page === currentPage
-                        ? 'bg-blue-600 text-white border-blue-600'
+                        ? 'theme-bg-primary text-white'
                         : 'hover:bg-gray-100'
                     }`}
                   >
@@ -140,7 +140,7 @@ export default async function BlogPage({
                 <ul className="space-y-2">
                   {categories.map((category) => (
                     <li key={category.id}>
-                      <span className="text-gray-600 hover:text-blue-600">
+                      <span className="text-gray-600 hover:opacity-70 cursor-pointer">
                         {category.name}
                         <span className="text-gray-400 mr-2">({category._count.posts})</span>
                       </span>

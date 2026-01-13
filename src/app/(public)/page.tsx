@@ -28,17 +28,17 @@ export default async function HomePage() {
   return (
     <div>
       {/* Hero Section */}
-      <section className="bg-gradient-to-r from-blue-600 to-blue-800 text-white py-20">
+      <section className="theme-hero text-white py-20">
         <div className="max-w-6xl mx-auto px-4 text-center">
           <h1 className="text-4xl md:text-5xl font-bold mb-4">
             {settings.siteName || 'ברוכים הבאים לבלוג'}
           </h1>
-          <p className="text-xl text-blue-100 mb-8">
+          <p className="text-xl opacity-90 mb-8">
             {settings.siteDescription || 'התוכן הטוב ביותר במקום אחד'}
           </p>
           <Link
             href="/blog"
-            className="inline-block bg-white text-blue-600 px-8 py-3 rounded-full font-medium hover:bg-blue-50 transition-colors"
+            className="inline-block bg-white px-8 py-3 rounded-full font-medium hover:bg-opacity-90 transition-colors theme-primary"
           >
             לכל הפוסטים
           </Link>
@@ -70,12 +70,12 @@ export default async function HomePage() {
                   )}
                   <div className="p-6">
                     {post.category && (
-                      <span className="text-sm text-blue-600 font-medium">
+                      <span className="text-sm theme-primary font-medium">
                         {post.category.name}
                       </span>
                     )}
                     <h3 className="text-xl font-bold mt-2 mb-3">
-                      <Link href={`/blog/${post.slug}`} className="hover:text-blue-600">
+                      <Link href={`/blog/${post.slug}`} className="hover:opacity-70 theme-link">
                         {post.title}
                       </Link>
                     </h3>
@@ -100,7 +100,7 @@ export default async function HomePage() {
             <div className="text-center mt-12">
               <Link
                 href="/blog"
-                className="inline-block border-2 border-blue-600 text-blue-600 px-8 py-3 rounded-full font-medium hover:bg-blue-600 hover:text-white transition-colors"
+                className="inline-block border-2 px-8 py-3 rounded-full font-medium hover:opacity-80 transition-colors theme-bg-primary text-white"
               >
                 הצג עוד פוסטים
               </Link>
