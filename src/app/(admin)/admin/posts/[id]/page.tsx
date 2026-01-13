@@ -24,6 +24,7 @@ export default async function EditPostPage({ params }: { params: Promise<{ id: s
           content: post.content,
           excerpt: post.excerpt || '',
           featuredImage: post.featuredImage || '',
+          featuredColor: post.featuredColor || '',
           status: post.status,
           categoryId: post.categoryId || '',
         }}
