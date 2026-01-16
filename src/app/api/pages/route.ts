@@ -23,7 +23,7 @@ export async function POST(request: NextRequest) {
   }
 
   try {
-    const { title, content, status, template } = await request.json();
+    const { title, content, status, template, featuredImage, headerColor } = await request.json();
 
     if (!title || !content) {
       return NextResponse.json(
@@ -45,6 +45,8 @@ export async function POST(request: NextRequest) {
         content,
         status: status || 'draft',
         template: template || 'default',
+        featuredImage: featuredImage || null,
+        headerColor: headerColor || null,
         authorId: session.user.id,
       },
       include: {

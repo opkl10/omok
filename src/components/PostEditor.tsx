@@ -1,8 +1,9 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef, useMemo } from 'react';
 import { useRouter } from 'next/navigation';
 import dynamic from 'next/dynamic';
+import MediaSelector from './MediaSelector';
 
 const ReactQuill = dynamic(() => import('react-quill-new'), { ssr: false });
 import 'react-quill-new/dist/quill.snow.css';
@@ -32,6 +33,9 @@ export default function PostEditor({ post, categories }: { post?: Post; categori
   const [categoryId, setCategoryId] = useState(post?.categoryId || '');
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
+  const [showMediaSelector, setShowMediaSelector] = useState(false);
+  const [mediaSelectorTarget, setMediaSelectorTarget] = useState<'featured' | 'content'>('featured');
+  const quillRef = useRef<any>(null);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -69,15 +73,37 @@ export default function PostEditor({ post, categories }: { post?: Post; categori
     }
   };
 
-  const modules = {
-    toolbar: [
-      [{ header: [1, 2, 3, false] }],
-      ['bold', 'italic', 'underline', 'strike'],
-      [{ list: 'ordered' }, { list: 'bullet' }],
-      ['link', 'image'],
-      ['clean'],
-    ],
+  const handleMediaSelect = (url: string) => {
+    if (mediaSelectorTarget === 'featured') {
+      setFeaturedImage(url);
+    } else if (mediaSelectorTarget === 'content' && quillRef.current) {
+      const editor = quillRef.current.getEditor();
+      const range = editor.getSelection();
+      if (range) {
+        editor.insertEmbed(range.index, 'image', window.location.origin + url);
+      }
+    }
   };
+
+  const imageHandler = () => {
+    setMediaSelectorTarget('content');
+    setShowMediaSelector(true);
+  };
+
+  const modules = useMemo(() => ({
+    toolbar: {
+      container: [
+        [{ header: [1, 2, 3, false] }],
+        ['bold', 'italic', 'underline', 'strike'],
+        [{ list: 'ordered' }, { list: 'bullet' }],
+        ['link', 'image', 'video'],
+        ['clean'],
+      ],
+      handlers: {
+        image: imageHandler,
+      },
+    },
+  }), []);
 
   return (
     <form onSubmit={handleSubmit} className="space-y-6">
@@ -104,6 +130,7 @@ export default function PostEditor({ post, categories }: { post?: Post; categori
             <label className="block text-sm font-medium text-gray-700 mb-1">תוכן</label>
             <div className="bg-white">
               <ReactQuill
+                ref={quillRef}
                 theme="snow"
                 value={content}
                 onChange={setContent}
@@ -168,13 +195,25 @@ export default function PostEditor({ post, categories }: { post?: Post; categori
 
           <div className="bg-white p-4 rounded-lg shadow">
             <h3 className="font-medium mb-4">תמונה ראשית</h3>
-            <input
-              type="text"
-              value={featuredImage}
-              onChange={(e) => setFeaturedImage(e.target.value)}
-              placeholder="כתובת URL של התמונה"
-              className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
-            />
+            <div className="space-y-2">
+              <input
+                type="text"
+                value={featuredImage}
+                onChange={(e) => setFeaturedImage(e.target.value)}
+                placeholder="כתובת URL של התמונה"
+                className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+              />
+              <button
+                type="button"
+                onClick={() => {
+                  setMediaSelectorTarget('featured');
+                  setShowMediaSelector(true);
+                }}
+                className="w-full px-3 py-2 bg-blue-100 hover:bg-blue-200 text-blue-700 rounded-md text-sm"
+              >
+                בחר מספריית המדיה
+              </button>
+            </div>
             {featuredImage && (
               <img
                 src={featuredImage}
@@ -185,6 +224,13 @@ export default function PostEditor({ post, categories }: { post?: Post; categori
           </div>
         </div>
       </div>
+
+      <MediaSelector
+        isOpen={showMediaSelector}
+        onClose={() => setShowMediaSelector(false)}
+        onSelect={handleMediaSelect}
+        allowVideos={true}
+      />
     </form>
   );
 }

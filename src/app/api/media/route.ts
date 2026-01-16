@@ -30,12 +30,26 @@ export async function POST(request: NextRequest) {
       return NextResponse.json({ error: 'No file provided' }, { status: 400 });
     }
 
-    const allowedTypes = ['image/jpeg', 'image/png', 'image/gif', 'image/webp', 'image/svg+xml'];
+    const allowedTypes = [
+      // Images
+      'image/jpeg',
+      'image/png',
+      'image/gif',
+      'image/webp',
+      'image/svg+xml',
+      // Videos
+      'video/mp4',
+      'video/webm',
+      'video/ogg',
+      'video/quicktime', // .mov files
+    ];
     if (!allowedTypes.includes(file.type)) {
-      return NextResponse.json({ error: 'Invalid file type' }, { status: 400 });
+      return NextResponse.json({ error: 'Invalid file type. Allowed: images (JPEG, PNG, GIF, WebP, SVG) and videos (MP4, WebM, OGG, MOV)' }, { status: 400 });
     }
 
-    const maxSize = 10 * 1024 * 1024; // 10MB
+    // Different max sizes for images and videos
+    const isVideo = file.type.startsWith('video/');
+    const maxSize = isVideo ? 100 * 1024 * 1024 : 10 * 1024 * 1024; // 100MB for videos, 10MB for images
     if (file.size > maxSize) {
       return NextResponse.json({ error: 'File too large' }, { status: 400 });
     }

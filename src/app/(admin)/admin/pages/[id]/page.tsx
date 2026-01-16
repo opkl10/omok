@@ -21,6 +21,8 @@ export default async function EditPagePage({ params }: { params: Promise<{ id: s
           content: page.content,
           status: page.status,
           template: page.template,
+          featuredImage: page.featuredImage || '',
+          headerColor: page.headerColor || '',
         }}
       />
     </div>

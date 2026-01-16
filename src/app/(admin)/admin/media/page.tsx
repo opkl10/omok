@@ -112,7 +112,7 @@ export default function MediaPage() {
           <input
             ref={fileInputRef}
             type="file"
-            accept="image/*"
+            accept="image/*,video/*"
             multiple
             onChange={handleUpload}
             className="hidden"
@@ -145,12 +145,27 @@ export default function MediaPage() {
                     selectedMedia?.id === item.id ? 'border-blue-500' : 'border-transparent'
                   }`}
                 >
-                  <div className="aspect-square bg-gray-100 flex items-center justify-center">
-                    <img
-                      src={item.url}
-                      alt={item.originalName}
-                      className="w-full h-full object-cover"
-                    />
+                  <div className="aspect-square bg-gray-100 flex items-center justify-center relative">
+                    {item.mimeType.startsWith('video/') ? (
+                      <>
+                        <video
+                          src={item.url}
+                          className="w-full h-full object-cover"
+                          muted
+                        />
+                        <div className="absolute inset-0 flex items-center justify-center bg-black bg-opacity-30">
+                          <svg className="w-12 h-12 text-white" fill="currentColor" viewBox="0 0 20 20">
+                            <path d="M6.3 2.841A1.5 1.5 0 004 4.11V15.89a1.5 1.5 0 002.3 1.269l9.344-5.89a1.5 1.5 0 000-2.538L6.3 2.84z" />
+                          </svg>
+                        </div>
+                      </>
+                    ) : (
+                      <img
+                        src={item.url}
+                        alt={item.originalName}
+                        className="w-full h-full object-cover"
+                      />
+                    )}
                   </div>
                   <div className="p-2">
                     <div className="text-sm truncate" title={item.originalName}>
@@ -169,11 +184,19 @@ export default function MediaPage() {
             <div className="bg-white rounded-lg shadow p-4 sticky top-6">
               <h3 className="font-medium mb-4">פרטי קובץ</h3>
               <div className="aspect-video bg-gray-100 rounded mb-4 flex items-center justify-center">
-                <img
-                  src={selectedMedia.url}
-                  alt={selectedMedia.originalName}
-                  className="max-w-full max-h-full object-contain"
-                />
+                {selectedMedia.mimeType.startsWith('video/') ? (
+                  <video
+                    src={selectedMedia.url}
+                    controls
+                    className="max-w-full max-h-full"
+                  />
+                ) : (
+                  <img
+                    src={selectedMedia.url}
+                    alt={selectedMedia.originalName}
+                    className="max-w-full max-h-full object-contain"
+                  />
+                )}
               </div>
               <div className="space-y-2 text-sm">
                 <div>

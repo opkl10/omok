@@ -37,7 +37,7 @@ export async function PUT(
   const { id } = await params;
 
   try {
-    const { title, content, status, template } = await request.json();
+    const { title, content, status, template, featuredImage, headerColor } = await request.json();
 
     const existingPage = await prisma.page.findUnique({ where: { id } });
     if (!existingPage) {
@@ -63,6 +63,8 @@ export async function PUT(
         content,
         status,
         template,
+        featuredImage: featuredImage || null,
+        headerColor: headerColor || null,
       },
       include: {
         author: { select: { id: true, name: true } },

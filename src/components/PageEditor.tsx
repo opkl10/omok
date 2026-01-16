@@ -1,8 +1,9 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useRef, useMemo } from 'react';
 import { useRouter } from 'next/navigation';
 import dynamic from 'next/dynamic';
+import MediaSelector from './MediaSelector';
 
 const ReactQuill = dynamic(() => import('react-quill-new'), { ssr: false });
 import 'react-quill-new/dist/quill.snow.css';
@@ -13,6 +14,8 @@ interface Page {
   content: string;
   status: string;
   template: string;
+  featuredImage?: string;
+  headerColor?: string;
 }
 
 export default function PageEditor({ page }: { page?: Page }) {
@@ -21,8 +24,13 @@ export default function PageEditor({ page }: { page?: Page }) {
   const [content, setContent] = useState(page?.content || '');
   const [status, setStatus] = useState(page?.status || 'draft');
   const [template, setTemplate] = useState(page?.template || 'default');
+  const [featuredImage, setFeaturedImage] = useState(page?.featuredImage || '');
+  const [headerColor, setHeaderColor] = useState(page?.headerColor || '');
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
+  const [showMediaSelector, setShowMediaSelector] = useState(false);
+  const [mediaSelectorTarget, setMediaSelectorTarget] = useState<'featured' | 'content'>('featured');
+  const quillRef = useRef<any>(null);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -36,7 +44,7 @@ export default function PageEditor({ page }: { page?: Page }) {
       const response = await fetch(url, {
         method,
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ title, content, status, template }),
+        body: JSON.stringify({ title, content, status, template, featuredImage, headerColor }),
       });
 
       if (!response.ok) {
@@ -53,15 +61,37 @@ export default function PageEditor({ page }: { page?: Page }) {
     }
   };
 
-  const modules = {
-    toolbar: [
-      [{ header: [1, 2, 3, false] }],
-      ['bold', 'italic', 'underline', 'strike'],
-      [{ list: 'ordered' }, { list: 'bullet' }],
-      ['link', 'image'],
-      ['clean'],
-    ],
+  const handleMediaSelect = (url: string) => {
+    if (mediaSelectorTarget === 'featured') {
+      setFeaturedImage(url);
+    } else if (mediaSelectorTarget === 'content' && quillRef.current) {
+      const editor = quillRef.current.getEditor();
+      const range = editor.getSelection();
+      if (range) {
+        editor.insertEmbed(range.index, 'image', window.location.origin + url);
+      }
+    }
   };
+
+  const imageHandler = () => {
+    setMediaSelectorTarget('content');
+    setShowMediaSelector(true);
+  };
+
+  const modules = useMemo(() => ({
+    toolbar: {
+      container: [
+        [{ header: [1, 2, 3, false] }],
+        ['bold', 'italic', 'underline', 'strike'],
+        [{ list: 'ordered' }, { list: 'bullet' }],
+        ['link', 'image', 'video'],
+        ['clean'],
+      ],
+      handlers: {
+        image: imageHandler,
+      },
+    },
+  }), []);
 
   return (
     <form onSubmit={handleSubmit} className="space-y-6">
@@ -88,6 +118,7 @@ export default function PageEditor({ page }: { page?: Page }) {
             <label className="block text-sm font-medium text-gray-700 mb-1">תוכן</label>
             <div className="bg-white">
               <ReactQuill
+                ref={quillRef}
                 theme="snow"
                 value={content}
                 onChange={setContent}
@@ -136,8 +167,60 @@ export default function PageEditor({ page }: { page?: Page }) {
               </button>
             </div>
           </div>
+
+          <div className="bg-white p-4 rounded-lg shadow">
+            <h3 className="font-medium mb-4">תמונה ראשית</h3>
+            <div className="space-y-2">
+              <input
+                type="text"
+                value={featuredImage}
+                onChange={(e) => setFeaturedImage(e.target.value)}
+                placeholder="כתובת URL של התמונה"
+                className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+              />
+              <button
+                type="button"
+                onClick={() => {
+                  setMediaSelectorTarget('featured');
+                  setShowMediaSelector(true);
+                }}
+                className="w-full px-3 py-2 bg-blue-100 hover:bg-blue-200 text-blue-700 rounded-md text-sm"
+              >
+                בחר מספריית המדיה
+              </button>
+            </div>
+            {featuredImage && (
+              <img
+                src={featuredImage}
+                alt="Featured"
+                className="mt-2 w-full h-32 object-cover rounded"
+              />
+            )}
+          </div>
+
+          <div className="bg-white p-4 rounded-lg shadow">
+            <h3 className="font-medium mb-4">צבע כותרת</h3>
+            <input
+              type="color"
+              value={headerColor}
+              onChange={(e) => setHeaderColor(e.target.value)}
+              className="w-full h-10 border border-gray-300 rounded-md cursor-pointer"
+            />
+            {headerColor && (
+              <div className="mt-2 text-sm text-gray-600">
+                צבע נבחר: {headerColor}
+              </div>
+            )}
+          </div>
         </div>
       </div>
+
+      <MediaSelector
+        isOpen={showMediaSelector}
+        onClose={() => setShowMediaSelector(false)}
+        onSelect={handleMediaSelect}
+        allowVideos={true}
+      />
     </form>
   );
 }
