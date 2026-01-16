@@ -81,6 +81,7 @@ model Media {
   size         Int
   url          String
   storageType  String   @default("local")
+  cloudinaryId String?
   createdAt    DateTime @default(now())
 }
 
