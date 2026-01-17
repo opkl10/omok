@@ -101,3 +101,10 @@ model Settings {
   value     String
   updatedAt DateTime @updatedAt
 }
+
+model Newsletter {
+  id          String   @id @default(uuid())
+  email       String   @unique
+  subscribedAt DateTime @default(now())
+  active      Boolean  @default(true)
+}

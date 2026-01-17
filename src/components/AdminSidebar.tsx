@@ -10,6 +10,7 @@ const menuItems = [
   { href: '/admin/pages', label: 'עמודים', icon: '📄' },
   { href: '/admin/categories', label: 'קטגוריות', icon: '📁' },
   { href: '/admin/media', label: 'מדיה', icon: '🖼️' },
+  { href: '/admin/analytics', label: 'אנליטיקס', icon: '📈' },
   { href: '/admin/settings', label: 'הגדרות', icon: '⚙️' },
 ];
 
