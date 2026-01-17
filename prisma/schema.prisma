@@ -24,22 +24,32 @@ model User {
 }
 
 model Post {
-  id            String    @id @default(uuid())
-  title         String
-  slug          String    @unique
-  content       String
-  excerpt       String?
-  featuredImage String?
-  headerColor   String?
-  status        String    @default("draft")
-  publishedAt   DateTime?
-  createdAt     DateTime  @default(now())
-  updatedAt     DateTime  @updatedAt
-  authorId      String
-  author        User      @relation(fields: [authorId], references: [id])
-  categoryId    String?
-  category      Category? @relation(fields: [categoryId], references: [id])
-  tags          Tag[]
+  id              String    @id @default(uuid())
+  title           String
+  slug            String    @unique
+  content         String
+  excerpt         String?
+  featuredImage   String?
+  headerColor     String?
+  status          String    @default("draft")
+  publishedAt     DateTime?
+  createdAt       DateTime  @default(now())
+  updatedAt       DateTime  @updatedAt
+  authorId        String
+  author          User      @relation(fields: [authorId], references: [id])
+  categoryId      String?
+  category        Category? @relation(fields: [categoryId], references: [id])
+  tags            Tag[]
+  // SEO fields
+  metaDescription String?
+  metaKeywords    String?
+  ogImage         String?
+  // Analytics
+  views           Int       @default(0)
+  // Reading time (calculated, stored for performance)
+  readingTime     Int?      // in minutes
+  // Comments
+  allowComments   Boolean   @default(true)
 }
 
 model Page {

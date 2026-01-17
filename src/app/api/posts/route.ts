@@ -3,6 +3,7 @@ import { getServerSession } from 'next-auth';
 import { authOptions } from '@/lib/auth';
 import prisma from '@/lib/prisma';
 import slugify from 'slugify';
+import { calculateReadingTime } from '@/lib/blog-utils';
 
 export async function GET(request: NextRequest) {
   const { searchParams } = new URL(request.url);
@@ -45,7 +46,19 @@ export async function POST(request: NextRequest) {
   }
 
   try {
-    const { title, content, excerpt, featuredImage, headerColor, status, categoryId } = await request.json();
+    const {
+      title,
+      content,
+      excerpt,
+      featuredImage,
+      headerColor,
+      status,
+      categoryId,
+      metaDescription,
+      metaKeywords,
+      ogImage,
+      allowComments,
+    } = await request.json();
 
     if (!title || !content) {
       return NextResponse.json(
@@ -62,6 +75,9 @@ export async function POST(request: NextRequest) {
       slug = `${slug}-${Date.now()}`;
     }
 
+    // Calculate reading time
+    const readingTime = calculateReadingTime(content);
+
     const post = await prisma.post.create({
       data: {
         title,
@@ -74,6 +90,11 @@ export async function POST(request: NextRequest) {
         publishedAt: status === 'published' ? new Date() : null,
         authorId: session.user.id,
         categoryId: categoryId || null,
+        metaDescription,
+        metaKeywords,
+        ogImage,
+        allowComments: allowComments ?? true,
+        readingTime,
       },
       include: {
         author: { select: { id: true, name: true } },

@@ -21,6 +21,10 @@ interface Post {
   featuredImage: string;
   status: string;
   categoryId: string;
+  metaDescription?: string;
+  metaKeywords?: string;
+  ogImage?: string;
+  allowComments?: boolean;
 }
 
 export default function PostEditor({ post, categories }: { post?: Post; categories: Category[] }) {
@@ -31,10 +35,14 @@ export default function PostEditor({ post, categories }: { post?: Post; categori
   const [featuredImage, setFeaturedImage] = useState(post?.featuredImage || '');
   const [status, setStatus] = useState(post?.status || 'draft');
   const [categoryId, setCategoryId] = useState(post?.categoryId || '');
+  const [metaDescription, setMetaDescription] = useState(post?.metaDescription || '');
+  const [metaKeywords, setMetaKeywords] = useState(post?.metaKeywords || '');
+  const [ogImage, setOgImage] = useState(post?.ogImage || '');
+  const [allowComments, setAllowComments] = useState(post?.allowComments ?? true);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
   const [showMediaSelector, setShowMediaSelector] = useState(false);
-  const [mediaSelectorTarget, setMediaSelectorTarget] = useState<'featured' | 'content'>('featured');
+  const [mediaSelectorTarget, setMediaSelectorTarget] = useState<'featured' | 'content' | 'og'>('featured');
   const quillRef = useRef<any>(null);
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -56,6 +64,10 @@ export default function PostEditor({ post, categories }: { post?: Post; categori
           featuredImage,
           status,
           categoryId: categoryId || null,
+          metaDescription,
+          metaKeywords,
+          ogImage,
+          allowComments,
         }),
       });
 
@@ -76,6 +88,8 @@ export default function PostEditor({ post, categories }: { post?: Post; categori
   const handleMediaSelect = (url: string) => {
     if (mediaSelectorTarget === 'featured') {
       setFeaturedImage(url);
+    } else if (mediaSelectorTarget === 'og') {
+      setOgImage(url);
     } else if (mediaSelectorTarget === 'content' && quillRef.current) {
       const editor = quillRef.current.getEditor();
       const range = editor.getSelection();
@@ -221,6 +235,89 @@ export default function PostEditor({ post, categories }: { post?: Post; categori
                 className="mt-2 w-full h-32 object-cover rounded"
               />
             )}
+          </div>
+
+          <div className="bg-white p-4 rounded-lg shadow">
+            <h3 className="font-medium mb-4">SEO & קידום</h3>
+            <div className="space-y-4">
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-1">
+                  תיאור מטא (Meta Description)
+                </label>
+                <textarea
+                  value={metaDescription}
+                  onChange={(e) => setMetaDescription(e.target.value)}
+                  placeholder="תיאור קצר לגוגל ורשתות חברתיות (160 תווים מומלצים)"
+                  rows={3}
+                  maxLength={160}
+                  className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 text-sm"
+                />
+                <div className="text-xs text-gray-500 mt-1">
+                  {metaDescription.length}/160 תווים
+                </div>
+              </div>
+
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-1">
+                  מילות מפתח (Keywords)
+                </label>
+                <input
+                  type="text"
+                  value={metaKeywords}
+                  onChange={(e) => setMetaKeywords(e.target.value)}
+                  placeholder="מילות מפתח מופרדות בפסיקים"
+                  className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 text-sm"
+                />
+              </div>
+
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-1">
+                  תמונה לשיתוף (OG Image)
+                </label>
+                <div className="space-y-2">
+                  <input
+                    type="text"
+                    value={ogImage}
+                    onChange={(e) => setOgImage(e.target.value)}
+                    placeholder="URL (אם ריק, תשתמש התמונה הראשית)"
+                    className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 text-sm"
+                  />
+                  <button
+                    type="button"
+                    onClick={() => {
+                      setMediaSelectorTarget('og');
+                      setShowMediaSelector(true);
+                    }}
+                    className="w-full px-3 py-2 bg-blue-100 hover:bg-blue-200 text-blue-700 rounded-md text-sm"
+                  >
+                    בחר תמונה
+                  </button>
+                </div>
+                {ogImage && (
+                  <img
+                    src={ogImage}
+                    alt="OG"
+                    className="mt-2 w-full h-20 object-cover rounded"
+                  />
+                )}
+              </div>
+            </div>
+          </div>
+
+          <div className="bg-white p-4 rounded-lg shadow">
+            <h3 className="font-medium mb-4">הגדרות נוספות</h3>
+            <div className="flex items-center">
+              <input
+                type="checkbox"
+                id="allowComments"
+                checked={allowComments}
+                onChange={(e) => setAllowComments(e.target.checked)}
+                className="h-4 w-4 text-blue-600 focus:ring-blue-500 border-gray-300 rounded"
+              />
+              <label htmlFor="allowComments" className="mr-2 block text-sm text-gray-900">
+                אפשר תגובות
+              </label>
+            </div>
           </div>
         </div>
       </div>

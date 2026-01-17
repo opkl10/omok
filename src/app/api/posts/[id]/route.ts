@@ -3,6 +3,7 @@ import { getServerSession } from 'next-auth';
 import { authOptions } from '@/lib/auth';
 import prisma from '@/lib/prisma';
 import slugify from 'slugify';
+import { calculateReadingTime } from '@/lib/blog-utils';
 
 export async function GET(
   request: NextRequest,
@@ -39,7 +40,19 @@ export async function PUT(
   const { id } = await params;
 
   try {
-    const { title, content, excerpt, featuredImage, status, categoryId } = await request.json();
+    const {
+      title,
+      content,
+      excerpt,
+      featuredImage,
+      headerColor,
+      status,
+      categoryId,
+      metaDescription,
+      metaKeywords,
+      ogImage,
+      allowComments,
+    } = await request.json();
 
     const existingPost = await prisma.post.findUnique({ where: { id } });
     if (!existingPost) {
@@ -57,6 +70,11 @@ export async function PUT(
       }
     }
 
+    // Recalculate reading time if content changed
+    const readingTime = content !== existingPost.content
+      ? calculateReadingTime(content)
+      : existingPost.readingTime;
+
     const post = await prisma.post.update({
       where: { id },
       data: {
@@ -65,9 +83,15 @@ export async function PUT(
         content,
         excerpt,
         featuredImage,
+        headerColor,
         status,
         publishedAt: status === 'published' && !existingPost.publishedAt ? new Date() : existingPost.publishedAt,
         categoryId: categoryId || null,
+        metaDescription,
+        metaKeywords,
+        ogImage,
+        allowComments,
+        readingTime,
       },
       include: {
         author: { select: { id: true, name: true } },

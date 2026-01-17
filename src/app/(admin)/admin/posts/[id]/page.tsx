@@ -26,6 +26,10 @@ export default async function EditPostPage({ params }: { params: Promise<{ id: s
           featuredImage: post.featuredImage || '',
           status: post.status,
           categoryId: post.categoryId || '',
+          metaDescription: post.metaDescription || '',
+          metaKeywords: post.metaKeywords || '',
+          ogImage: post.ogImage || '',
+          allowComments: post.allowComments,
         }}
         categories={categories}
       />
